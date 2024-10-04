@@ -8,6 +8,36 @@
   flex-direction: column;
   margin: 20px;
 }
+.name {
+  display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  margin: 0 5px;
+  margin-top: 10px;
+}
+.rating {
+  margin: 0 5px;
+  font-weight: 400;
+  font-size: 12px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.description {
+  font-size: 15px;
+  margin: 0 5px;
+  color: rgba(0, 0, 0, 0.663);
+}
+.price {
+  font-size: 15px;
+  margin: 5px;
+}
+.price::after {
+  content: " night";
+  font-weight: 100;
+}
 .nextImg {
   background: none;
   opacity: 0.75;
