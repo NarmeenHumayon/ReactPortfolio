@@ -1,0 +1,10 @@
+.navbutton {
+  color: black;
+  background-color: white;
+  border-radius: 20px;
+  opacity: 0.5;
+}
+.navbutton:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  opacity: 1;
+}
