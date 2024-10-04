@@ -8,3 +8,14 @@
   flex-direction: column;
   margin: 20px;
 }
+.nextImg {
+  background: none;
+  opacity: 0.75;
+  margin-top: 110px;
+  display: flex;
+  width: inherit;
+  justify-content: space-between;
+}
+.nextImg button {
+  background: none;
+}
