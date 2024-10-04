@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./NavBar.css";
 import StaysButton from "./StaysButton";
+import ProfileOps from "./Profile";
 function NavBar() {
   const [currentOpt, setOpt] = useState("stays");
   return (
@@ -18,6 +19,9 @@ function NavBar() {
             onbuttonclick={() => setOpt("experiences")}
             isSelected={currentOpt == "experiences"}
           />
+        </div>
+        <div>
+          <ProfileOps />
         </div>
       </div>
     </>
