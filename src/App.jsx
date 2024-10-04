@@ -1,6 +1,7 @@
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Card from "./components/Card";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
           price={"PKR 10"}
         />
       </div>
+      <Footer />
     </>
   );
 }
