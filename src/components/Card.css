@@ -1,0 +1,10 @@
+.cardCont {
+  max-width: 250px;
+  min-width: 250px;
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
