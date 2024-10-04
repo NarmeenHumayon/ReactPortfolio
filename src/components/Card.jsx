@@ -13,7 +13,8 @@ const Card = ({ images, name, desc, price, rating, type, ...props }) => {
             backgroundPosition: "center",
             width: "250px",
             height: "250px",
-            borderRadius: "15px",
+            borderTopLeftRadius: "15px",
+            borderTopRightRadius: "15px",
           }}
         >
           <div className="nextImg">
