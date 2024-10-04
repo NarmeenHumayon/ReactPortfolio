@@ -83,6 +83,18 @@ footer {
     transform: scale(1);
   }
 }
+.footerlinks {
+  display: flex;
+  gap: 20px;
+  margin: 10px auto;
+}
+.footerlinks a {
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+.footerlinks a:hover {
+  color: #394050;
+}
 .middleflex {
   display: flex;
   justify-content: space-between;
