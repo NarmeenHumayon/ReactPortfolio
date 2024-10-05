@@ -1,0 +1,17 @@
+.catContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  gap: 100px;
+  margin-top: 10px;
+  overflow-x: scroll;
+  width: 100%;
+}
+.catContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.catContainer {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
