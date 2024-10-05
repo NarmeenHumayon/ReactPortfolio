@@ -46,7 +46,7 @@ const Footer = ({}) => {
             </svg>
           </a>
         </div>
-        <img src="airbnb.png" width={100} style={{ margin: "10px" }} />
+        <img src="airbnb.png" width={100} style={{ margin: "30px" }} />
       </div>
       <div className="footerlinks">
         <a href="#">Terms and Conditions</a>
