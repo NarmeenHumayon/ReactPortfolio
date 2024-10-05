@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./NavBar.css";
 import StaysButton from "./StaysButton";
 import ProfileOps from "./Profile";
-import Categories from "./Categories";
-import SearchBar from "./SearchBar";
+import Categories from "./Categories/Categories";
+import SearchBar from "./SearchBar/SearchBar";
 function NavBar() {
   const [currentOpt, setOpt] = useState("stays");
   return (
