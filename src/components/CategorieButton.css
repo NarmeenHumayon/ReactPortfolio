@@ -1,0 +1,16 @@
+.cat-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  padding: 2px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+}
+.cat-cont:hover {
+  opacity: 1;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.733);
+}
