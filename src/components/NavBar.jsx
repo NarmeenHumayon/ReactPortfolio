@@ -3,6 +3,7 @@ import "./NavBar.css";
 import StaysButton from "./StaysButton";
 import ProfileOps from "./Profile";
 import Categories from "./Categories";
+import SearchBar from "./SearchBar";
 function NavBar() {
   const [currentOpt, setOpt] = useState("stays");
   return (
@@ -29,7 +30,8 @@ function NavBar() {
               isSelected={currentOpt == "experiences"}
             />
           </div>
-          <div>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <SearchBar placeholder={"Enter Location"} />
             <ProfileOps />
           </div>
         </div>
