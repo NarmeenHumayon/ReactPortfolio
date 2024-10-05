@@ -4,6 +4,8 @@ import "./Categories.css";
 const Categories = ({}) => {
   return (
     <>
+      <div className="catContainer" ref={cat_container_ref}>
+      </div>
     </>
   );
 };
