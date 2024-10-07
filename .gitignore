@@ -25,4 +25,4 @@ dist-ssr
 
 # environment variable files
 .env
-uploads/*.png
+server/uploads/*.png
