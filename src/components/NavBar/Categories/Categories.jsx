@@ -38,6 +38,7 @@ const Categories = ({}) => {
         <div className="catContainer" ref={cat_container_ref}>
           {categories.map((cat) => (
             <CategorieButton
+              key={cat._id}
               id={cat._id}
               imgsrc={`http://localhost:5000/uploads/${cat.imgsrc}`}
               title={cat.name}
