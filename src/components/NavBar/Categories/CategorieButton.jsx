@@ -12,6 +12,7 @@ const CategorieButton = ({ imgsrc, title, onButtonClick, ...props }) => {
       }}
       style={value.category == title ? { opacity: 1 } : {}}
     >
+      <img width="20" height="20" src={imgsrc} alt="shop" />
       {title}
     </div>
   );
