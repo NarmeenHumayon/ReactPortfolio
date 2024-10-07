@@ -61,7 +61,7 @@ Before we run the frontent we have get the server up and running.
 - run `npm install`
 - create a .env file in this folder
 - inside .env create CONNECTION_STRING variable
-- store your mongodb connection string in it
+- store your mongodb_connection_string/db_name in it
 - run `npm start` to start the server
 
 ### Setting up the frontend
