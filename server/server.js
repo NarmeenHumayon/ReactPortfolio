@@ -35,6 +35,14 @@ app.post('/category',upload.single("cat_img"), async(req, res) => {
         res.status(400).json({ message: error });
     } 
 }); 
+app.get("/category",async (req, res) => {
+    try {
+        const categories = await categoriesModel.find(); // Retrieve all categories from the database
+        res.status(200).json(categories); // Send categories as JSON
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Handle errors
+    }
+})
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
