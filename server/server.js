@@ -77,6 +77,19 @@ app.post("/item",upload.single("item_img"),async(req,res)=>{
         res.status(400).json({ message: error });
     } 
 })
+app.get("/item",async(req,res)=>{
+    const cat_id = req.params.cat_id
+    try {var categories
+        if(cat_id==null){
+        categories = await itemsModel.find();
+    }else{  
+        categories = await itemsModel.find({cat_id:cat_id});
+    }
+        res.status(200).json(categories); // Send categories as JSON
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Handle errors
+    }
+})
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
