@@ -78,9 +78,10 @@ app.post("/item",upload.single("item_img"),async(req,res)=>{
     } 
 })
 app.get("/item",async(req,res)=>{
-    const cat_id = req.params.cat_id
-    try {var categories
-        if(cat_id==null){
+    const cat_id = req.query.cat_id 
+    try {
+        var categories
+        if(!cat_id){
         categories = await itemsModel.find();
     }else{  
         categories = await itemsModel.find({cat_id:cat_id});
