@@ -26,3 +26,7 @@ dist-ssr
 # environment variable files
 .env
 server/uploads/*.png
+server/uploads/*.jpg
+server/uploads/*.jpeg
+server/uploads/*.webpg
+server/uploads/*.svg
