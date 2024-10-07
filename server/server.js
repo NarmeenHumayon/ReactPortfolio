@@ -11,6 +11,7 @@ require("dotenv").config()
 mongoose.connect(process.env.CONNECTION_STRING)
 const app = express();
 const PORT = process.env.PORT || 5000;
+
 const storage = multer.diskStorage({
     destination: (req,file,cb)=>{
         return cb(null,"./uploads")
@@ -57,6 +58,24 @@ app.get("/category",async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message }); // Handle errors
     }
+})
+app.post("/item",upload.single("item_img"),async(req,res)=>{
+    let item_name = req.body.item_name
+    let item_desc = req.body.item_desc
+    let item_price = req.body.item_price
+    let cat_id= req.body.cat_id
+    let img_path = req.file.filename 
+    let rating = req.body.rating 
+    let type = req.body.type 
+    console.log(rating,type)
+    const Item = new itemsModel({name:item_name,desc:item_desc,price:item_price,cat_id:cat_id,imgsrc:img_path,rating:rating,type:type}) 
+     try {
+        const newItem = await Item.save();
+        res.status(201).json(newItem);
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ message: error });
+    } 
 })
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
