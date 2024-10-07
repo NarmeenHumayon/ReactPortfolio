@@ -1,13 +1,18 @@
 import "./App.css";
+import { categoryContext } from "./context/context";
 import NavBar from "./components/NavBar/NavBar";
 import Card from "./components/Card/Card";
 import Footer from "./components/Footer/Footer";
+import { useState } from "react";
 
 function App() {
+  const [category, setCategory] = useState("");
   return (
     <>
+      <categoryContext.Provider value={{ category, setCategory }}>
       <NavBar />
-      <div className="container">
+        <div
+          className="container"
         <Card
           images={[
             "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
@@ -111,6 +116,7 @@ function App() {
         />
       </div>
       <Footer />
+      </categoryContext.Provider>
     </>
   );
 }

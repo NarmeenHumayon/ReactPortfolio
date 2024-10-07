@@ -4,8 +4,9 @@
   gap: 3px;
   align-items: center;
   font-size: 12px;
+  white-space: nowrap;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.3;
   transition: opacity 0.3s ease;
   padding: 2px;
   border-bottom: 2px solid rgba(0, 0, 0, 0);
