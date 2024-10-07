@@ -22,6 +22,21 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 app.use(cors());
 app.use(bodyParser.json());
+app.get('/uploads/:filename', (req, res) => {
+    const filename = req.params.filename;
+    const filePath = path.join(__dirname, 'uploads', filename);
+
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                res.status(404).json({ message: 'Image not found' });
+            } else {
+                console.error('Error sending file:', err);
+                res.status(500).json({ message: 'Internal Server Error' });
+            }
+        }
+    });
+});
 app.post('/category',upload.single("cat_img"), async(req, res) => {
     let cat_name = req.body.cat_name
     let img_path = req.file.filename
