@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import "./Admin.css";
+import NavBar from "./components/NavBar/NavBar";
 const Admin = () => {
   const [categories, setCategories] = useState([]);
+  const cat_img_ref = useRef();
+  const item_img_ref = useRef();
   const [formData, setFormData] = useState({
     cat_name: "",
     cat_img: null,
@@ -43,6 +46,7 @@ const Admin = () => {
   }, []);
   return (
     <>
+      <NavBar />
       <div className="admin-container">
         <div className="left">
           <div className="head">Add category</div>
@@ -63,6 +67,7 @@ const Admin = () => {
                 if (response.ok) {
                   const result = await response.json();
                   console.log("Success:", result);
+                  location.reload();
                 } else {
                   console.error("Upload failed:", response.statusText);
                 }
@@ -71,12 +76,19 @@ const Admin = () => {
               }
             }}
           >
-            <img
-              src="https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw"
-              alt=""
-              width={200}
-              height={200}
-              style={{ cursor: "pointer", borderRadius: "5px" }}
+            <div
+              ref={cat_img_ref}
+              style={{
+                cursor: "pointer",
+                borderRadius: "5px",
+                width: "200px",
+                height: "200px",
+                backgroundImage:
+                  "url('https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw')",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}
               onClick={() => {
                 document.getElementById("imginp").click();
               }}
@@ -87,7 +99,21 @@ const Admin = () => {
               name="cat_img"
               accept="image/*"
               hidden
-              onChange={handleChange}
+              onChange={(event) => {
+                const file = event.target.files[0]; // Get the selected file
+
+                if (file) {
+                  const reader = new FileReader(); // Create a FileReader to read the file
+
+                  reader.onload = function (e) {
+                    cat_img_ref.current.style.backgroundImage = `url(${e.target.result})`;
+                    // img.style.display = "block";
+                  };
+
+                  reader.readAsDataURL(file);
+                }
+                handleChange(event);
+              }}
               style={{ background: "white", color: "black" }}
               required
             />
@@ -127,6 +153,7 @@ const Admin = () => {
                 if (response.ok) {
                   const result = await response.json();
                   console.log("Success:", result);
+                  location.reload();
                 } else {
                   console.error("Upload failed:", response.statusText);
                 }
@@ -135,12 +162,19 @@ const Admin = () => {
               }
             }}
           >
-            <img
-              src="https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw"
-              alt=""
-              width={200}
-              height={200}
-              style={{ cursor: "pointer", borderRadius: "5px" }}
+            <div
+              ref={item_img_ref}
+              style={{
+                cursor: "pointer",
+                borderRadius: "5px",
+                width: "200px",
+                height: "200px",
+                backgroundImage:
+                  "url('https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw')",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}
               onClick={() => {
                 document.getElementById("imginp2").click();
               }}
@@ -151,7 +185,21 @@ const Admin = () => {
               name="item_image"
               accept="image/*"
               hidden
-              onChange={handleItemChange}
+              onChange={(event) => {
+                const file = event.target.files[0]; // Get the selected file
+
+                if (file) {
+                  const reader = new FileReader(); // Create a FileReader to read the file
+
+                  reader.onload = function (e) {
+                    item_img_ref.current.style.backgroundImage = `url(${e.target.result})`;
+                    // img.style.display = "block";
+                  };
+
+                  reader.readAsDataURL(file);
+                }
+                handleChange(event);
+              }}
               style={{ background: "white", color: "black" }}
               required
             />

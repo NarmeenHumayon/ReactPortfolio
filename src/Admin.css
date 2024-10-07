@@ -1,6 +1,7 @@
 .admin-container {
   display: flex;
   width: 100vw;
+  margin-top: 150px;
   height: 100vh;
   justify-content: space-around;
 }
@@ -22,7 +23,7 @@
   font-size: 20px;
 }
 .category-form {
-  background-color: rgb(139, 97, 255);
+  background-color: rgb(247, 63, 63);
   border-radius: 5px;
   padding: 10px;
   width: fit-content;
