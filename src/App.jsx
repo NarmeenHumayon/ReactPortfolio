@@ -6,11 +6,13 @@ import Footer from "./components/Footer/Footer";
 import { useEffect, useState } from "react";
 import Gears from "./components/Loaders/Gears";
 import Space from "./components/Loaders/Space";
+import { useParams } from "react-router-dom";
 
 function App() {
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState([]);
+  const { query } = useParams();
   useEffect(() => {
     setIsLoading(true);
     fetch(`http://localhost:5000/item?cat_id=${category}`)
@@ -38,14 +40,14 @@ function App() {
             <Gears />
           ) : items.length ? (
             items.map(({ name, desc, price, imgsrc, rating, type }) => (
-            <Card
-              images={[`http://localhost:5000/uploads/${imgsrc}`]}
-              name={name}
-              rating={`${rating}.0/5`}
-              type={type}
-              desc={desc}
-              price={price}
-            />
+              <Card
+                images={[`http://localhost:5000/uploads/${imgsrc}`]}
+                name={name}
+                rating={`${rating}.0/5`}
+                type={type}
+                desc={desc}
+                price={price}
+              />
             ))
           ) : (
             <>
