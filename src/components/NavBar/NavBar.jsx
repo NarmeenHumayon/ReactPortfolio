@@ -18,7 +18,7 @@ function NavBar() {
           }}
         >
           <img src="airbnb.png" width={70} />
-          <div>
+          <div className="staysButtons">
             <StaysButton
               text={"Stays"}
               onbuttonclick={() => setOpt("stays")}

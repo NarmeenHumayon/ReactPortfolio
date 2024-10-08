@@ -7,6 +7,12 @@
   padding-bottom: 0;
   left: 0;
   right: 0;
+  z-index: 12;
   background-color: rgb(255, 255, 255);
   border-bottom: 1px solid rgba(0, 0, 0, 0.071);
+}
+@media only screen and (max-width: 600px) {
+  .staysButtons {
+    display: none;
+  }
 }
