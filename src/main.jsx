@@ -8,6 +8,7 @@ import "./index.css";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
+      <Route Component={App} path="/:query"></Route>
       <Route Component={App} path="/"></Route>
       <Route Component={Admin} path="/admin/"></Route>
     </Routes>
