@@ -4,15 +4,21 @@ import NavBar from "./components/NavBar/NavBar";
 import Card from "./components/Card/Card";
 import Footer from "./components/Footer/Footer";
 import { useEffect, useState } from "react";
+import Gears from "./components/Loaders/Gears";
+import Space from "./components/Loaders/Space";
 
 function App() {
   const [category, setCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState([]);
   useEffect(() => {
-    console.log("hello");
+    setIsLoading(true);
     fetch(`http://localhost:5000/item?cat_id=${category}`)
       .then((res) => res.json())
-      .then((data) => setItems(data));
+      .then((data) => {
+        setItems(data);
+        setIsLoading(false);
+      });
   }, [, category]);
   return (
     <>
@@ -28,7 +34,10 @@ function App() {
               });
           }}
         >
-          {items.map(({ name, desc, price, imgsrc, rating, type }) => (
+          {isLoading ? (
+            <Gears />
+          ) : items.length ? (
+            items.map(({ name, desc, price, imgsrc, rating, type }) => (
             <Card
               images={[`http://localhost:5000/uploads/${imgsrc}`]}
               name={name}
@@ -37,7 +46,12 @@ function App() {
               desc={desc}
               price={price}
             />
-          ))}{" "}
+            ))
+          ) : (
+            <>
+              <Space />
+            </>
+          )}{" "}
           {/* <Card
             images={[
               "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
