@@ -74,7 +74,10 @@ Now its time to run the UI
 
 ### Adding items
 
-you can either add your own items from the admin panel `base_url/admin`, or download dummy data from ...(I'll give the link later)
+you can either add your own items from the admin panel `base_url/admin`, or follow through following instruction to use dummy data I have provided
+
+- go to server directory and extract dummy_data.zip file into the same folder, make sure to replace uploads folder if it already exists
+- load airbnb.category.json & airbnb.items.json into your mongodb database
 
 ## About the Backend
 
