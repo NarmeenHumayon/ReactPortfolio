@@ -67,7 +67,6 @@ app.post("/item",upload.single("item_img"),async(req,res)=>{
     let img_path = req.file.filename 
     let rating = req.body.rating 
     let type = req.body.type 
-    console.log(rating,type)
     const Item = new itemsModel({name:item_name,desc:item_desc,price:item_price,cat_id:cat_id,imgsrc:img_path,rating:rating,type:type}) 
      try {
         const newItem = await Item.save();
