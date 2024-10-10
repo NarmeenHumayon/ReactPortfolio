@@ -64,7 +64,7 @@ const Card = ({ images, name, desc, price, rating, type, ...props }) => {
         <div className="name">
           {name}{" "}
           <div className="rating">
-            {rating}
+            {parseFloat(rating).toFixed(2)}/5
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="12"
