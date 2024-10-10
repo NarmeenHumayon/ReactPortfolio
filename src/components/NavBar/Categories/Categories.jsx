@@ -4,6 +4,8 @@ import "./Categories.css";
 const Categories = ({}) => {
   const cat_container_ref = useRef();
   const [categories, setCategories] = useState([]);
+  const [showLeft, setShowLeft] = useState(false);
+  const [ShowRight, setShowRight] = useState(true);
 
   useEffect(() => {
     fetch("http://localhost:5000/category")
@@ -16,25 +18,45 @@ const Categories = ({}) => {
       <div
         style={{ display: "flex", alignItems: "center", userSelect: "none" }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="26"
-          height="26"
-          fill="currentColor"
-          class="bi bi-arrow-right-circle-fill"
-          viewBox="0 0 16 16"
-          style={{
-            opacity: 0.7,
-            margin: "0 10px",
-            transform: "rotate(180deg)",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            cat_container_ref.current.scrollLeft -= 100;
-          }}
-        >
-          <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-        </svg>
+        {showLeft ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            fill="currentColor"
+            class="bi bi-arrow-right-circle-fill"
+            viewBox="0 0 16 16"
+            style={{
+              opacity: 0.7,
+              margin: "0 10px",
+              transform: "rotate(180deg)",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              cat_container_ref.current.scrollLeft -= 100;
+              if (cat_container_ref.current.scrollLeft <= 0) {
+                setShowLeft(false);
+              }
+
+              if (!ShowRight) {
+                setShowRight(true);
+              }
+            }}
+          >
+            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+          </svg>
+        ) : (
+          <div
+            style={{
+              opacity: 0.7,
+              width: "26px",
+              margin: "0 10px",
+              transform: "rotate(180deg)",
+              cursor: "pointer",
+            }}
+          ></div>
+        )}
+
         <div className="catContainer" ref={cat_container_ref}>
           {categories.map((cat) => (
             <CategorieButton
@@ -85,20 +107,39 @@ const Categories = ({}) => {
             title={"caves"}
           /> */}
         </div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="26"
-          height="26"
-          fill="currentColor"
-          class="bi bi-arrow-right-circle-fill"
-          viewBox="0 0 16 16"
-          style={{ opacity: 0.7, margin: "0 10px", cursor: "pointer" }}
-          onClick={() => {
-            cat_container_ref.current.scrollLeft += 100;
-          }}
-        >
-          <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-        </svg>
+        {ShowRight ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            fill="currentColor"
+            class="bi bi-arrow-right-circle-fill"
+            viewBox="0 0 16 16"
+            style={{ opacity: 0.7, margin: "0 10px", cursor: "pointer" }}
+            onClick={() => {
+              if (!showLeft) {
+                setShowLeft(true);
+              }
+              const oldScrollLeft = cat_container_ref.current.scrollLeft;
+              cat_container_ref.current.scrollLeft += 100;
+              if (oldScrollLeft == cat_container_ref.current.scrollLeft) {
+                setShowRight(false);
+              }
+            }}
+          >
+            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+          </svg>
+        ) : (
+          <div
+            style={{
+              opacity: 0.7,
+              width: "26px",
+              margin: "0 10px",
+              transform: "rotate(180deg)",
+              cursor: "pointer",
+            }}
+          ></div>
+        )}
       </div>
     </>
   );
