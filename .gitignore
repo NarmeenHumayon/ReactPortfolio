@@ -28,5 +28,5 @@ dist-ssr
 server/uploads/*.png
 server/uploads/*.jpg
 server/uploads/*.jpeg
-server/uploads/*.webpg
+server/uploads/*.webp
 server/uploads/*.svg
