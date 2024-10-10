@@ -29,7 +29,6 @@ const Admin = () => {
   };
   const handleItemChange = (e) => {
     const { name, value, files } = e.target;
-    console.log(e.target);
     if (value == "null") {
       return;
     }
@@ -133,7 +132,6 @@ const Admin = () => {
           <form
             className="category-form"
             onSubmit={async (e) => {
-              console.log(itemFormData);
               e.preventDefault();
 
               const data = new FormData();
@@ -198,7 +196,7 @@ const Admin = () => {
 
                   reader.readAsDataURL(file);
                 }
-                handleChange(event);
+                handleItemChange(event);
               }}
               style={{ background: "white", color: "black" }}
               required
