@@ -12,6 +12,7 @@ function App() {
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState([]);
+  const [showScreen, setShowScreen] = useState(false);
   const { query } = useParams();
   useEffect(() => {
     setIsLoading(true);
@@ -21,40 +22,45 @@ function App() {
         setItems(data);
         setIsLoading(false);
       });
+    setTimeout(() => {
+      setShowScreen(true);
+    }, 3000);
   }, [, category]);
-  return (
-    <>
-      <categoryContext.Provider value={{ category, setCategory }}>
-        <NavBar />
-        <div
-          className="container"
-          onClick={() => {
-            fetch("http://localhost:5000/api/test")
-              .then((data) => data.json())
-              .then((res) => {
-                console.log(res);
-              });
-          }}
-        >
-          {isLoading ? (
-            <Gears />
-          ) : items.length ? (
-            items.map(({ name, desc, price, imgsrc, rating, type }) => (
-              <Card
-                images={[`http://localhost:5000/uploads/${imgsrc}`]}
-                name={name}
-                rating={`${rating}.0/5`}
-                type={type}
-                desc={desc}
-                price={price}
-              />
-            ))
-          ) : (
-            <>
-              <Space />
-            </>
-          )}{" "}
-          {/* <Card
+  if (showScreen) {
+    return (
+      <>
+        <categoryContext.Provider value={{ category, setCategory }}>
+          <NavBar />
+          <div
+            className="container"
+            onClick={() => {
+              fetch("http://localhost:5000/api/test")
+                .then((data) => data.json())
+                .then((res) => {
+                  console.log(res);
+                });
+            }}
+          >
+            {isLoading ? (
+              <Gears />
+            ) : items.length ? (
+              items.map(({ name, desc, price, imgsrc, rating, type, _id }) => (
+                <Card
+                  key={_id}
+                  images={[`http://localhost:5000/uploads/${imgsrc}`]}
+                  name={name}
+                  rating={`${rating}.0/5`}
+                  type={type}
+                  desc={desc}
+                  price={price}
+                />
+              ))
+            ) : (
+              <>
+                <Space />
+              </>
+            )}{" "}
+            {/* <Card
             images={[
               "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
               "https://a0.muscache.com/im/pictures/07824a1a-09a9-4a1d-903c-bcd84b9a6b96.jpg?im_w=720",
@@ -145,11 +151,12 @@ function App() {
             desc={"This is a card to show places"}
             price={"PKR 10"}
           /> */}
-        </div>
-        <Footer />
-      </categoryContext.Provider>
-    </>
-  );
+          </div>
+          <Footer />
+        </categoryContext.Provider>
+      </>
+    );
+  }
 }
 
 export default App;
