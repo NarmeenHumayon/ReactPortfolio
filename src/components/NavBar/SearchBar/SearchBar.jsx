@@ -13,7 +13,7 @@ const SearchBar = ({ placeholder }) => {
     >
       <div class="search-container">
         <div class="mainbox">
-          <button class="iconContainer">
+          <button className="iconContainer">
             <svg
               viewBox="0 0 512 512"
               height="1em"
