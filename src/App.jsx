@@ -3,17 +3,42 @@ import { categoryContext } from "./context/context";
 import NavBar from "./components/NavBar/NavBar";
 import Card from "./components/Card/Card";
 import Footer from "./components/Footer/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Gears from "./components/Loaders/Gears";
-import Space from "./components/Loaders/Space";
 import { useParams } from "react-router-dom";
 
 function App() {
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const canvasContRef = useRef();
   const [items, setItems] = useState([]);
   const [showScreen, setShowScreen] = useState(false);
   const { query } = useParams();
+  useEffect(() => {
+    setTimeout(() => {
+      setShowScreen(true);
+      setTimeout(() => {
+        var addition = 0;
+        // Manual smooth scrolling because browsers don't support without allowing it first
+        // https://stackoverflow.com/questions/62098093/scroll-behaviour-smooth-not-working-at-all
+        const inter = setInterval(() => {
+          if (window.scrollY < 270) {
+            addition += window.scrollY * 0.06 + 1;
+          } else {
+            addition += (400 - window.scrollY) * 0.03;
+          }
+          if (window.scrollY >= 400) {
+            clearInterval(inter);
+          }
+          window.scroll({
+            top: addition,
+            left: 0,
+            behavior: "smooth",
+          });
+        }, 10);
+      }, 2000);
+    }, 3000);
+  }, []);
   useEffect(() => {
     setIsLoading(true);
     fetch(`http://localhost:5000/item?cat_id=${category}`)
@@ -22,24 +47,52 @@ function App() {
         setItems(data);
         setIsLoading(false);
       });
-    setTimeout(() => {
-      setShowScreen(true);
-    }, 3000);
   }, [, category]);
-  if (showScreen) {
-    return (
-      <>
+  return (
+    <>
+      {showScreen && (
         <categoryContext.Provider value={{ category, setCategory }}>
           <NavBar />
           <div
-            className="container"
-            onClick={() => {
-              fetch("http://localhost:5000/api/test")
-                .then((data) => data.json())
-                .then((res) => {
-                  console.log(res);
-                });
+            style={{
+              marginTop: "150px",
+              textAlign: "left",
             }}
+          >
+            <div className="catchCont">
+              <div className="catchText">
+                More <b>variety</b>
+              </div>
+              <div className="catchText">
+                Better <b>price</b>
+              </div>
+              <div className="catchText">
+                Better <b>place</b>
+              </div>
+              <button
+                onClick={() => {
+                  setShowScreen(false);
+                  canvasContRef.current.style.zIndex = 1;
+                }}
+                className="modelView"
+              >
+                View Model{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-box"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            className="container listings"
+            style={{ backgroundColor: "#fff" }}
           >
             {isLoading ? (
               <Gears />
@@ -56,107 +109,14 @@ function App() {
                 />
               ))
             ) : (
-              <>
-                <Space />
-              </>
-            )}{" "}
-            {/* <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-              "https://a0.muscache.com/im/pictures/07824a1a-09a9-4a1d-903c-bcd84b9a6b96.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          />
-          <Card
-            images={[
-              "https://a0.muscache.com/im/pictures/7b43d02d-bc24-4271-b90e-29fcdd43bd56.jpg?im_w=720",
-            ]}
-            name={"Card"}
-            rating={4.5}
-            type={"Private room"}
-            desc={"This is a card to show places"}
-            price={"PKR 10"}
-          /> */}
+              <div style={{ margin: "100px auto" }}>404 not found</div>
+            )}
           </div>
           <Footer />
         </categoryContext.Provider>
-      </>
-    );
-  }
+      )}
+    </>
+  );
 }
 
 export default App;

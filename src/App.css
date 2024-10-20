@@ -23,6 +23,71 @@
   justify-content: left;
   gap: 50px;
   width: 100vw;
-  margin-top: 150px;
   flex-wrap: wrap;
+}
+.threeContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  z-index: -1;
+}
+@keyframes popFromBelow {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+@keyframes slideLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes shuffle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.listings {
+  animation: popFromBelow 0.5s ease;
+}
+.catchCont {
+  display: flex;
+  flex-direction: column;
+  margin: 100px 0;
+  margin-bottom: 200px;
+  padding: 20px;
+  gap: 10px;
+}
+.catchText {
+  text-transform: uppercase;
+  animation: slideLeft 1s ease;
+  font-size: 40px;
+}
+.catchText b {
+  font-weight: 900;
+}
+.modelView {
+  width: fit-content;
+  color: rgb(0, 0, 0);
+  background-color: inherit;
+  animation: slideLeft 1s ease;
+  opacity: 0.3;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.modelView:hover svg {
+  animation: shuffle 1s ease-in-out;
+}
+.modelView:hover {
+  opacity: 1;
 }
