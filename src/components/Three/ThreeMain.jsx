@@ -1,6 +1,8 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, RoundedBox } from "@react-three/drei";
+import { Model } from "./Houses";
+
 const ThreeMain = () => {
   return (
     <Canvas
@@ -30,6 +32,7 @@ const ThreeMain = () => {
       >
         <meshStandardMaterial attach="material" color={"#fc3a3a"} />
       </RoundedBox> */}
+      <Model position={[-30, -1, 20]} />
       <OrbitControls />
     </Canvas>
   );
