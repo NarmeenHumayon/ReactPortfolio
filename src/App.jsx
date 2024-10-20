@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import { useEffect, useRef, useState } from "react";
 import Gears from "./components/Loaders/Gears";
 import { useParams } from "react-router-dom";
+import ThreeMain from "./components/Three/ThreeMain";
 
 function App() {
   const [category, setCategory] = useState("");
@@ -50,6 +51,9 @@ function App() {
   }, [, category]);
   return (
     <>
+      <div className="threeContainer" ref={canvasContRef}>
+        <ThreeMain />
+      </div>
       {showScreen && (
         <categoryContext.Provider value={{ category, setCategory }}>
           <NavBar />
