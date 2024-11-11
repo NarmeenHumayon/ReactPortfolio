@@ -134,20 +134,74 @@ app.post("/api/admin/listing",upload.single("item_img"),async(req,res)=>{
         res.status(400).json({ message: error });
     } 
 })
-app.get("/item",async(req,res)=>{
-    const cat_id = req.query.cat_id 
+
+app.post("/api/bookings",authorize_token,async(req,res)=>{
+    let user_id = req.body.user_id
+    let item_id = req.body.item_id
+    let date = req.body.date
+    let time = req.body.time
+    let time_period = req.body.time_period
+    const booking = new bookingsModel({user_id:user_id,item_id:item_id,date:date,time:time,time_period:time_period}) 
+     try {
+        const newBooking = await booking.save();
+        res.status(201).json(newBooking);
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ message: error });
+    } 
+})
+app.get("/api/admin/bookings",authorize_token,async(req,res)=>{
     try {
-        var categories
-        if(!cat_id){
-        categories = await itemsModel.find();
-    }else{  
-        categories = await itemsModel.find({cat_id:cat_id});
-    }
-        res.status(200).json(categories); // Send categories as JSON
+        const bookings = await bookingsModel.find(); // Retrieve all categories from the database
+        res.status(200).json(bookings); // Send categories as JSON
     } catch (error) {
         res.status(500).json({ message: error.message }); // Handle errors
     }
+}
+)
+
+
+// Login
+app.post("/login",async(req,res)=>{
+    const username = req.body.username;
+    const password = req.body.password;
+    const user = await usersModel.findOne({username:username})
+    if(!user) return res.status(403).json({message:"Not authorized"})
+    if(user?.password!=password) return res.status(403).json({message:"Not authorized"})
+else{
+    const userObj = {username:username,email:user?.email,password:password}
+    const access_tkn = JWT.sign(userObj,process.env.ACCESSTOKEN)
+    return res.status(200).json({message:access_tkn,status:200})}
 })
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.post("/register",async(req,res)=>{
+    const email = req.body.email
+    const username = req.body.username;
+    const password = req.body.password; 
+    try {
+        const newUser = new usersModel({email,username,password})
+        const savedUser = await newUser.save();
+        const userObj = {username:username,email:email,password:password}
+        const access_tkn = JWT.sign(userObj,process.env.ACCESSTOKEN)
+        return res.status(200).json({message:access_tkn}) 
+    }catch(error){
+        if(error.code == 11000){
+           return res.status(400).json({message:"User already exists"})
+        }
+        res.status(400).json({message:error.message})
+    }
+})
+
+// JWT authorize middleware
+
+function authorize_token(req,res,next){
+    const auth_tkn = req.headers["authorization"]
+    const token = auth_tkn?.split(" ")[1]
+    if(token == null){
+        res.status(401).json({message:"Bad request, no auth"})
+    }
+    JWT.verify(token,process.env.ACCESSTOKEN,(err,user)=>{
+        if(err) return res.status(403).json({message:"Invalid token"})
+        req.user=user;
+        next();
+    })
+}
