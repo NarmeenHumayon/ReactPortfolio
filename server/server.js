@@ -6,6 +6,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const itemsModel = require("./models/Item")
 const categoriesModel = require("./models/category")
+const JWT  = require("jsonwebtoken"); 
+const usersModel = require('./models/users');
 require("dotenv").config()
 
 mongoose.connect(process.env.CONNECTION_STRING)
@@ -23,6 +25,13 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 app.use(cors());
 app.use(bodyParser.json());
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+
+// Serving the uploaded files over the api
 app.get('/uploads/:filename', (req, res) => {
     const filename = req.params.filename;
     const filePath = path.join(__dirname, 'uploads', filename);
@@ -38,6 +47,10 @@ app.get('/uploads/:filename', (req, res) => {
         }
     });
 });
+
+
+// get all categories
+
 app.post('/category',upload.single("cat_img"), async(req, res) => {
     let cat_name = req.body.cat_name
     let img_path = req.file.filename
@@ -51,6 +64,9 @@ app.post('/category',upload.single("cat_img"), async(req, res) => {
         res.status(400).json({ message: error });
     } 
 }); 
+
+// add new categories
+
 app.get("/category",async (req, res) => {
     try {
         const categories = await categoriesModel.find(); // Retrieve all categories from the database
@@ -59,7 +75,49 @@ app.get("/category",async (req, res) => {
         res.status(500).json({ message: error.message }); // Handle errors
     }
 })
-app.post("/item",upload.single("item_img"),async(req,res)=>{
+
+
+// Get all listings
+
+app.get("/api/listing",async(req,res)=>{
+    const cat_id = req.query.cat_id 
+    try {
+        var categories
+        if(!cat_id){
+        categories = await itemsModel.find();
+    }else{  
+        categories = await itemsModel.find({cat_id:cat_id});
+    }
+        res.status(200).json(categories); // Send categories as JSON
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Handle errors
+    }
+})
+
+
+// Get a specific listing
+
+app.get("/api/listing/:id",async(req,res)=>{
+    var id = req.params.id  
+    try {   
+        const listing = await itemsModel.find({_id:id})
+        res.status(200).json(listing); // Send categories as JSON
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Handle errors
+    }
+})
+app.delete("/api/admin/listing/:id",async(req,res)=>{
+    var id = req.params.id  
+    try {   
+        const listing = await itemsModel.find({_id:id})
+        listing.remove()
+        res.status(200).json(listing); // Send categories as JSON
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Handle errors
+    }
+})
+// Add new listing
+app.post("/api/admin/listing",upload.single("item_img"),async(req,res)=>{
     let item_name = req.body.item_name
     let item_desc = req.body.item_desc
     let item_price = req.body.item_price
