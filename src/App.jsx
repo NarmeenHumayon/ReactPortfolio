@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Gears from "./components/Loaders/Gears";
 import { useParams } from "react-router-dom";
 import ThreeMain from "./components/Three/ThreeMain";
+import axios from "axios";
 
 function App() {
   const [category, setCategory] = useState("");
@@ -38,12 +39,12 @@ function App() {
           });
         }, 10);
       }, 2000);
-    }, 3000);
+    }, 0);
   }, []);
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:5000/item?cat_id=${category}`)
-      .then((res) => res.json())
+    axios
+      .get(`http://localhost:5000/api/listing?cat_id=${category}`)
       .then((data) => {
         setItems(data);
         setIsLoading(false);
@@ -52,7 +53,7 @@ function App() {
   return (
     <>
       <div className="threeContainer" ref={canvasContRef}>
-        <ThreeMain />
+        {/* <ThreeMain /> */}
       </div>
       {showScreen && (
         <categoryContext.Provider value={{ category, setCategory }}>

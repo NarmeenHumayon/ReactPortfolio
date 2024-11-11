@@ -144,10 +144,13 @@ const Admin = () => {
               data.append("type", itemFormData.type);
 
               try {
-                const response = await fetch("http://localhost:5000/item", {
-                  method: "POST",
-                  body: data,
-                });
+                const response = await fetch(
+                  "http://localhost:5000/api/admin/listing",
+                  {
+                    method: "POST",
+                    body: data,
+                  }
+                );
                 if (response.ok) {
                   const result = await response.json();
                   console.log("Success:", result);
