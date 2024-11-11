@@ -30,3 +30,4 @@ server/uploads/*.jpg
 server/uploads/*.jpeg
 server/uploads/*.webp
 server/uploads/*.svg
+server/uploads/*.bmp
